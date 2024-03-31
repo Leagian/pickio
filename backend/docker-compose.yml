@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  app:
+    container_name: pickio_nestjs_app
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '5000:5000'
+    environment:
+      DATABASE_URL: postgresql://prisma:prisma@db:5432/pickio_recs?schema=public
+    command: npm run start:dev
+    depends_on:
+      - db
+  db:
+    container_name: pickio_postgres_db
+    image: postgres:13
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: pickio_recs
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
