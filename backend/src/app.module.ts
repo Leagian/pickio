@@ -1,21 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserModule } from './user/user.module';
-import { PostModule } from './post/post.module';
-import { CommentModule } from './comment/comment.module';
-import { ShareModule } from './share/share.module';
-import { BookmarkModule } from './bookmark/bookmark.module';
-import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
-    AuthModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+    }),
     UserModule,
-    PostModule,
-    CommentModule,
-    ShareModule,
-    BookmarkModule,
-    TestModule,
   ],
 })
 export class AppModule {}

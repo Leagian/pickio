@@ -3,7 +3,7 @@ services:
   app:
     container_name: pickio_nestjs_app
     build: .
-    volumes: # Removed for deployment
+    volumes: # Remove for deployment
       - .:/app
     ports:
       - '5000:5000'

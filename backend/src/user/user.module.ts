@@ -1,10 +1,10 @@
 // user.module.ts
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserController } from './user.controller';
+import { UserResolver } from '../graphql/users/user.resolver';
 
 @Module({
-  providers: [UserService],
-  controllers: [UserController],
+  providers: [UserService, UserResolver],
+  exports: [UserService],
 })
 export class UserModule {}
