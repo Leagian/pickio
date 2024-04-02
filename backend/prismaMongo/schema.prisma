@@ -1,0 +1,45 @@
+datasource mongo {
+  provider = "mongodb"
+  url      = env("MONGO_DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/clientMongo"
+}
+
+model Post {
+  postId      String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  user_id     String
+  content     String
+  address     String
+  location    Json
+  images      String[]
+  tags        String[]
+  likes       String[]
+  shareCount  Int     @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model Comment {
+  commentId   String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  postId      String
+  user_id     String
+  content     String
+  createdAt   DateTime @default(now())
+}
+
+model Share {
+  shareId       String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  postId        String
+  user_id       String
+  sharedWithId  String[]
+  createdAt     DateTime @default(now())
+}
+
+model Bookmark {
+  bookmarkId  String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  user_id     String
+  posts       String[]
+  createdAt   DateTime @default(now())
+}

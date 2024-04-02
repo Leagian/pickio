@@ -3,27 +3,35 @@ services:
   app:
     container_name: pickio_nestjs_app
     build: .
-    volumes:
+    volumes: # Removed for deployment
       - .:/app
-      - /app/node_modules
     ports:
       - '5000:5000'
     environment:
-      DATABASE_URL: postgresql://prisma:prisma@db:5432/pickio_recs?schema=public
+      POSTGRES_DB_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pickio_postgres_db:5432/${POSTGRES_DB}
+      MONGO_DB_URL: ${MONGO_DB_URL}
     command: npm run start:dev
     depends_on:
-      - db
-  db:
+      - postgres
+      - mongo
+  postgres:
     container_name: pickio_postgres_db
     image: postgres:13
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_DB: pickio_recs
-      POSTGRES_USER: prisma
-      POSTGRES_PASSWORD: prisma
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
+  mongo:
+    container_name: pickio_mongo_db
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    ports:
+      - '27017:27017'
 volumes:
   postgres_data:
