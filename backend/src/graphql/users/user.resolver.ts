@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 import { UserService } from '../../user/user.service';
 import { User } from './user.entities';
 
@@ -16,8 +16,8 @@ export class UserResolver {
     return this.userService.getUserById(userId);
   }
 
-  @Mutation(() => User)
-  async createDummyUsers() {
-    return this.userService.createDummyUsers();
+  @Query(() => [User], { name: 'followers' })
+  async getFollowers(@Args('userId') userId: string) {
+    return this.userService.getFollowers(userId);
   }
 }

@@ -11,7 +11,14 @@ COPY package*.json ./
 RUN npm install
 
 # Copier le reste des fichiers du projet dans le conteneur
-COPY . .
+COPY . . 
+
+# Créer un utilisateur non-root et changer le propriétaire du répertoire /app
+# On utilise node comme utilisateur non-root pour éviter les problèmes de permissions avec les dépendances Node.js
+RUN chown -R node:node /app
+
+# Utiliser l'utilisateur non-root pour les instructions suivantes
+USER node
 
 # Exposer le port que l'application utilise
 EXPOSE 3000

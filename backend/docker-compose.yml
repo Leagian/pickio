@@ -8,15 +8,13 @@ services:
     ports:
       - '5000:5000'
     environment:
-      POSTGRES_DB_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pickio_postgres_db:5432/${POSTGRES_DB}
-      MONGO_DB_URL: ${MONGO_DB_URL}
+      POSTGRES_DB_URL: ${POSTGRES_DB_URL}
     command: npm run start:dev
     depends_on:
       - postgres
-      - mongo
   postgres:
     container_name: pickio_postgres_db
-    image: postgres:13
+    image: postgres:15
     ports:
       - '5432:5432'
     environment:
@@ -25,13 +23,5 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-  mongo:
-    container_name: pickio_mongo_db
-    image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-    ports:
-      - '27017:27017'
 volumes:
   postgres_data:
