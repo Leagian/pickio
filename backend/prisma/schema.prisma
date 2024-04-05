@@ -26,19 +26,20 @@ model User {
 }
 
 model UserFollows {
-  UserFollowsId Int    @id @default(autoincrement())
+  UserFollowsId String     @id @default(uuid())
   followerId    String
   followingId   String
   follower      User   @relation("userFollowsFollower", fields: [followerId], references: [userId])
   following     User   @relation("userFollowsFollowing", fields: [followingId], references: [userId])
+  createdAt     DateTime @default(now())
 
   @@unique([followerId, followingId])
 }
 
 model Post {
-  postId    Int        @id @default(autoincrement())
+  postId    String         @id @default(uuid())
   userId    String
-  content   String
+  content   String?
   address   String?
   location  Json?
   images    String[]
@@ -52,8 +53,8 @@ model Post {
 }
 
 model Comment {
-  commentId Int      @id @default(autoincrement())
-  postId    Int
+  commentId String       @id @default(uuid())
+  postId    String
   userId    String
   content   String
   createdAt DateTime @default(now())
@@ -62,8 +63,8 @@ model Comment {
 }
 
 model Like {
-  likeId    Int      @id @default(autoincrement())
-  postId    Int
+  likeId    String       @id @default(uuid())
+  postId    String
   userId    String
   createdAt DateTime @default(now())
   User      User     @relation(fields: [userId], references: [userId])
@@ -71,8 +72,8 @@ model Like {
 }
 
 model Share {
-  shareId   Int      @id @default(autoincrement())
-  postId    Int
+  shareId   String       @id @default(uuid())
+  postId    String
   userId    String
   createdAt DateTime @default(now())
   User      User     @relation(fields: [userId], references: [userId])
@@ -80,8 +81,8 @@ model Share {
 }
 
 model Bookmark {
-  bookmarkId Int      @id @default(autoincrement())
-  postId     Int
+  bookmarkId String       @id @default(uuid())
+  postId     String
   userId     String
   createdAt  DateTime @default(now())
   User       User     @relation(fields: [userId], references: [userId])

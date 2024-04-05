@@ -2,20 +2,93 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  user_id: ID!
-  username: String!
-  email: String!
-  profile_picture: String
-  bio: String
-  interests: String
-  created_at: DateTime!
+type Bookmark {
+  bookmarkId: ID!
+  postId: String!
+  userId: String!
+  createdAt: DateTime!
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type Like {
+  likeId: ID!
+  postId: String!
+  userId: String!
+  createdAt: DateTime!
+  user: User!
+  post: Post!
+}
+
+type Share {
+  shareId: ID!
+  postId: String!
+  userId: String!
+  createdAt: DateTime!
+  user: User!
+  post: Post!
+}
+
+type Post {
+  postId: ID!
+  userId: String!
+  content: String
+  address: String
+  location: JSONObject
+  images: [String!]!
+  tags: [String!]!
+  createdAt: DateTime!
+  user: User!
+  comments: [Comment!]
+  likes: [Like!]
+  shares: [Share!]
+  bookmarks: [Bookmark!]
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+type Comment {
+  commentId: ID!
+  postId: String!
+  userId: String!
+  content: String!
+  createdAt: DateTime!
+  user: User!
+  post: Post!
+}
+
+type UserFollows {
+  userFollowsId: ID!
+  followerId: String!
+  followingId: String!
+  follower: User!
+  following: User!
+  createdAt: DateTime!
+}
+
+type User {
+  userId: ID!
+  username: String!
+  email: String!
+  password: String!
+  profilePicture: String
+  bio: String
+  interests: String
+  createdAt: DateTime!
+  posts: [Post!]!
+  comments: [Comment!]!
+  likes: [Like!]!
+  shares: [Share!]!
+  bookmarks: [Bookmark!]!
+  followers: [UserFollows!]!
+  followings: [UserFollows!]!
+}
 
 type Query {
   users: [User!]!

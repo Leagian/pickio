@@ -14,18 +14,19 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "UserFollows" (
-    "UserFollowsId" SERIAL NOT NULL,
+    "UserFollowsId" TEXT NOT NULL,
     "followerId" TEXT NOT NULL,
     "followingId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "UserFollows_pkey" PRIMARY KEY ("UserFollowsId")
 );
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "postId" SERIAL NOT NULL,
+    "postId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "content" TEXT NOT NULL,
+    "content" TEXT,
     "address" TEXT,
     "location" JSONB,
     "images" TEXT[],
@@ -37,8 +38,8 @@ CREATE TABLE "Post" (
 
 -- CreateTable
 CREATE TABLE "Comment" (
-    "commentId" SERIAL NOT NULL,
-    "postId" INTEGER NOT NULL,
+    "commentId" TEXT NOT NULL,
+    "postId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -48,8 +49,8 @@ CREATE TABLE "Comment" (
 
 -- CreateTable
 CREATE TABLE "Like" (
-    "likeId" SERIAL NOT NULL,
-    "postId" INTEGER NOT NULL,
+    "likeId" TEXT NOT NULL,
+    "postId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -58,8 +59,8 @@ CREATE TABLE "Like" (
 
 -- CreateTable
 CREATE TABLE "Share" (
-    "shareId" SERIAL NOT NULL,
-    "postId" INTEGER NOT NULL,
+    "shareId" TEXT NOT NULL,
+    "postId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -68,8 +69,8 @@ CREATE TABLE "Share" (
 
 -- CreateTable
 CREATE TABLE "Bookmark" (
-    "bookmarkId" SERIAL NOT NULL,
-    "postId" INTEGER NOT NULL,
+    "bookmarkId" TEXT NOT NULL,
+    "postId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
