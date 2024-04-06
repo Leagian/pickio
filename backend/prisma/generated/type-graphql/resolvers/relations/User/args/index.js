@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserSharesArgs = exports.UserPostsArgs = exports.UserLikesArgs = exports.UserFollowingsArgs = exports.UserFollowersArgs = exports.UserCommentsArgs = exports.UserBookmarksArgs = void 0;
+var UserBookmarksArgs_1 = require("./UserBookmarksArgs");
+Object.defineProperty(exports, "UserBookmarksArgs", { enumerable: true, get: function () { return UserBookmarksArgs_1.UserBookmarksArgs; } });
+var UserCommentsArgs_1 = require("./UserCommentsArgs");
+Object.defineProperty(exports, "UserCommentsArgs", { enumerable: true, get: function () { return UserCommentsArgs_1.UserCommentsArgs; } });
+var UserFollowersArgs_1 = require("./UserFollowersArgs");
+Object.defineProperty(exports, "UserFollowersArgs", { enumerable: true, get: function () { return UserFollowersArgs_1.UserFollowersArgs; } });
+var UserFollowingsArgs_1 = require("./UserFollowingsArgs");
+Object.defineProperty(exports, "UserFollowingsArgs", { enumerable: true, get: function () { return UserFollowingsArgs_1.UserFollowingsArgs; } });
+var UserLikesArgs_1 = require("./UserLikesArgs");
+Object.defineProperty(exports, "UserLikesArgs", { enumerable: true, get: function () { return UserLikesArgs_1.UserLikesArgs; } });
+var UserPostsArgs_1 = require("./UserPostsArgs");
+Object.defineProperty(exports, "UserPostsArgs", { enumerable: true, get: function () { return UserPostsArgs_1.UserPostsArgs; } });
+var UserSharesArgs_1 = require("./UserSharesArgs");
+Object.defineProperty(exports, "UserSharesArgs", { enumerable: true, get: function () { return UserSharesArgs_1.UserSharesArgs; } });

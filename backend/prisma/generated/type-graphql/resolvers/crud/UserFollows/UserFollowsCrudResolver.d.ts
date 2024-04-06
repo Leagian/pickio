@@ -1,0 +1,35 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateUserFollowsArgs } from "./args/AggregateUserFollowsArgs";
+import { CreateManyUserFollowsArgs } from "./args/CreateManyUserFollowsArgs";
+import { CreateOneUserFollowsArgs } from "./args/CreateOneUserFollowsArgs";
+import { DeleteManyUserFollowsArgs } from "./args/DeleteManyUserFollowsArgs";
+import { DeleteOneUserFollowsArgs } from "./args/DeleteOneUserFollowsArgs";
+import { FindFirstUserFollowsArgs } from "./args/FindFirstUserFollowsArgs";
+import { FindFirstUserFollowsOrThrowArgs } from "./args/FindFirstUserFollowsOrThrowArgs";
+import { FindManyUserFollowsArgs } from "./args/FindManyUserFollowsArgs";
+import { FindUniqueUserFollowsArgs } from "./args/FindUniqueUserFollowsArgs";
+import { FindUniqueUserFollowsOrThrowArgs } from "./args/FindUniqueUserFollowsOrThrowArgs";
+import { GroupByUserFollowsArgs } from "./args/GroupByUserFollowsArgs";
+import { UpdateManyUserFollowsArgs } from "./args/UpdateManyUserFollowsArgs";
+import { UpdateOneUserFollowsArgs } from "./args/UpdateOneUserFollowsArgs";
+import { UpsertOneUserFollowsArgs } from "./args/UpsertOneUserFollowsArgs";
+import { UserFollows } from "../../../models/UserFollows";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateUserFollows } from "../../outputs/AggregateUserFollows";
+import { UserFollowsGroupBy } from "../../outputs/UserFollowsGroupBy";
+export declare class UserFollowsCrudResolver {
+    aggregateUserFollows(ctx: any, info: GraphQLResolveInfo, args: AggregateUserFollowsArgs): Promise<AggregateUserFollows>;
+    createManyUserFollows(ctx: any, info: GraphQLResolveInfo, args: CreateManyUserFollowsArgs): Promise<AffectedRowsOutput>;
+    createOneUserFollows(ctx: any, info: GraphQLResolveInfo, args: CreateOneUserFollowsArgs): Promise<UserFollows>;
+    deleteManyUserFollows(ctx: any, info: GraphQLResolveInfo, args: DeleteManyUserFollowsArgs): Promise<AffectedRowsOutput>;
+    deleteOneUserFollows(ctx: any, info: GraphQLResolveInfo, args: DeleteOneUserFollowsArgs): Promise<UserFollows | null>;
+    findFirstUserFollows(ctx: any, info: GraphQLResolveInfo, args: FindFirstUserFollowsArgs): Promise<UserFollows | null>;
+    findFirstUserFollowsOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstUserFollowsOrThrowArgs): Promise<UserFollows | null>;
+    findManyUserFollows(ctx: any, info: GraphQLResolveInfo, args: FindManyUserFollowsArgs): Promise<UserFollows[]>;
+    findUniqueUserFollows(ctx: any, info: GraphQLResolveInfo, args: FindUniqueUserFollowsArgs): Promise<UserFollows | null>;
+    findUniqueUserFollowsOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindUniqueUserFollowsOrThrowArgs): Promise<UserFollows | null>;
+    groupByUserFollows(ctx: any, info: GraphQLResolveInfo, args: GroupByUserFollowsArgs): Promise<UserFollowsGroupBy[]>;
+    updateManyUserFollows(ctx: any, info: GraphQLResolveInfo, args: UpdateManyUserFollowsArgs): Promise<AffectedRowsOutput>;
+    updateOneUserFollows(ctx: any, info: GraphQLResolveInfo, args: UpdateOneUserFollowsArgs): Promise<UserFollows | null>;
+    upsertOneUserFollows(ctx: any, info: GraphQLResolveInfo, args: UpsertOneUserFollowsArgs): Promise<UserFollows>;
+}

@@ -1,0 +1,35 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateBookmarkArgs } from "./args/AggregateBookmarkArgs";
+import { CreateManyBookmarkArgs } from "./args/CreateManyBookmarkArgs";
+import { CreateOneBookmarkArgs } from "./args/CreateOneBookmarkArgs";
+import { DeleteManyBookmarkArgs } from "./args/DeleteManyBookmarkArgs";
+import { DeleteOneBookmarkArgs } from "./args/DeleteOneBookmarkArgs";
+import { FindFirstBookmarkArgs } from "./args/FindFirstBookmarkArgs";
+import { FindFirstBookmarkOrThrowArgs } from "./args/FindFirstBookmarkOrThrowArgs";
+import { FindManyBookmarkArgs } from "./args/FindManyBookmarkArgs";
+import { FindUniqueBookmarkArgs } from "./args/FindUniqueBookmarkArgs";
+import { FindUniqueBookmarkOrThrowArgs } from "./args/FindUniqueBookmarkOrThrowArgs";
+import { GroupByBookmarkArgs } from "./args/GroupByBookmarkArgs";
+import { UpdateManyBookmarkArgs } from "./args/UpdateManyBookmarkArgs";
+import { UpdateOneBookmarkArgs } from "./args/UpdateOneBookmarkArgs";
+import { UpsertOneBookmarkArgs } from "./args/UpsertOneBookmarkArgs";
+import { Bookmark } from "../../../models/Bookmark";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateBookmark } from "../../outputs/AggregateBookmark";
+import { BookmarkGroupBy } from "../../outputs/BookmarkGroupBy";
+export declare class BookmarkCrudResolver {
+    aggregateBookmark(ctx: any, info: GraphQLResolveInfo, args: AggregateBookmarkArgs): Promise<AggregateBookmark>;
+    createManyBookmark(ctx: any, info: GraphQLResolveInfo, args: CreateManyBookmarkArgs): Promise<AffectedRowsOutput>;
+    createOneBookmark(ctx: any, info: GraphQLResolveInfo, args: CreateOneBookmarkArgs): Promise<Bookmark>;
+    deleteManyBookmark(ctx: any, info: GraphQLResolveInfo, args: DeleteManyBookmarkArgs): Promise<AffectedRowsOutput>;
+    deleteOneBookmark(ctx: any, info: GraphQLResolveInfo, args: DeleteOneBookmarkArgs): Promise<Bookmark | null>;
+    findFirstBookmark(ctx: any, info: GraphQLResolveInfo, args: FindFirstBookmarkArgs): Promise<Bookmark | null>;
+    findFirstBookmarkOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstBookmarkOrThrowArgs): Promise<Bookmark | null>;
+    bookmarks(ctx: any, info: GraphQLResolveInfo, args: FindManyBookmarkArgs): Promise<Bookmark[]>;
+    bookmark(ctx: any, info: GraphQLResolveInfo, args: FindUniqueBookmarkArgs): Promise<Bookmark | null>;
+    getBookmark(ctx: any, info: GraphQLResolveInfo, args: FindUniqueBookmarkOrThrowArgs): Promise<Bookmark | null>;
+    groupByBookmark(ctx: any, info: GraphQLResolveInfo, args: GroupByBookmarkArgs): Promise<BookmarkGroupBy[]>;
+    updateManyBookmark(ctx: any, info: GraphQLResolveInfo, args: UpdateManyBookmarkArgs): Promise<AffectedRowsOutput>;
+    updateOneBookmark(ctx: any, info: GraphQLResolveInfo, args: UpdateOneBookmarkArgs): Promise<Bookmark | null>;
+    upsertOneBookmark(ctx: any, info: GraphQLResolveInfo, args: UpsertOneBookmarkArgs): Promise<Bookmark>;
+}

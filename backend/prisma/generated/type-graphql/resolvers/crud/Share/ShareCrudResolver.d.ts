@@ -1,0 +1,35 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateShareArgs } from "./args/AggregateShareArgs";
+import { CreateManyShareArgs } from "./args/CreateManyShareArgs";
+import { CreateOneShareArgs } from "./args/CreateOneShareArgs";
+import { DeleteManyShareArgs } from "./args/DeleteManyShareArgs";
+import { DeleteOneShareArgs } from "./args/DeleteOneShareArgs";
+import { FindFirstShareArgs } from "./args/FindFirstShareArgs";
+import { FindFirstShareOrThrowArgs } from "./args/FindFirstShareOrThrowArgs";
+import { FindManyShareArgs } from "./args/FindManyShareArgs";
+import { FindUniqueShareArgs } from "./args/FindUniqueShareArgs";
+import { FindUniqueShareOrThrowArgs } from "./args/FindUniqueShareOrThrowArgs";
+import { GroupByShareArgs } from "./args/GroupByShareArgs";
+import { UpdateManyShareArgs } from "./args/UpdateManyShareArgs";
+import { UpdateOneShareArgs } from "./args/UpdateOneShareArgs";
+import { UpsertOneShareArgs } from "./args/UpsertOneShareArgs";
+import { Share } from "../../../models/Share";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateShare } from "../../outputs/AggregateShare";
+import { ShareGroupBy } from "../../outputs/ShareGroupBy";
+export declare class ShareCrudResolver {
+    aggregateShare(ctx: any, info: GraphQLResolveInfo, args: AggregateShareArgs): Promise<AggregateShare>;
+    createManyShare(ctx: any, info: GraphQLResolveInfo, args: CreateManyShareArgs): Promise<AffectedRowsOutput>;
+    createOneShare(ctx: any, info: GraphQLResolveInfo, args: CreateOneShareArgs): Promise<Share>;
+    deleteManyShare(ctx: any, info: GraphQLResolveInfo, args: DeleteManyShareArgs): Promise<AffectedRowsOutput>;
+    deleteOneShare(ctx: any, info: GraphQLResolveInfo, args: DeleteOneShareArgs): Promise<Share | null>;
+    findFirstShare(ctx: any, info: GraphQLResolveInfo, args: FindFirstShareArgs): Promise<Share | null>;
+    findFirstShareOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstShareOrThrowArgs): Promise<Share | null>;
+    shares(ctx: any, info: GraphQLResolveInfo, args: FindManyShareArgs): Promise<Share[]>;
+    share(ctx: any, info: GraphQLResolveInfo, args: FindUniqueShareArgs): Promise<Share | null>;
+    getShare(ctx: any, info: GraphQLResolveInfo, args: FindUniqueShareOrThrowArgs): Promise<Share | null>;
+    groupByShare(ctx: any, info: GraphQLResolveInfo, args: GroupByShareArgs): Promise<ShareGroupBy[]>;
+    updateManyShare(ctx: any, info: GraphQLResolveInfo, args: UpdateManyShareArgs): Promise<AffectedRowsOutput>;
+    updateOneShare(ctx: any, info: GraphQLResolveInfo, args: UpdateOneShareArgs): Promise<Share | null>;
+    upsertOneShare(ctx: any, info: GraphQLResolveInfo, args: UpsertOneShareArgs): Promise<Share>;
+}

@@ -1,0 +1,14 @@
+export { AggregateUserFollowsArgs } from "./AggregateUserFollowsArgs";
+export { CreateManyUserFollowsArgs } from "./CreateManyUserFollowsArgs";
+export { CreateOneUserFollowsArgs } from "./CreateOneUserFollowsArgs";
+export { DeleteManyUserFollowsArgs } from "./DeleteManyUserFollowsArgs";
+export { DeleteOneUserFollowsArgs } from "./DeleteOneUserFollowsArgs";
+export { FindFirstUserFollowsArgs } from "./FindFirstUserFollowsArgs";
+export { FindFirstUserFollowsOrThrowArgs } from "./FindFirstUserFollowsOrThrowArgs";
+export { FindManyUserFollowsArgs } from "./FindManyUserFollowsArgs";
+export { FindUniqueUserFollowsArgs } from "./FindUniqueUserFollowsArgs";
+export { FindUniqueUserFollowsOrThrowArgs } from "./FindUniqueUserFollowsOrThrowArgs";
+export { GroupByUserFollowsArgs } from "./GroupByUserFollowsArgs";
+export { UpdateManyUserFollowsArgs } from "./UpdateManyUserFollowsArgs";
+export { UpdateOneUserFollowsArgs } from "./UpdateOneUserFollowsArgs";
+export { UpsertOneUserFollowsArgs } from "./UpsertOneUserFollowsArgs";

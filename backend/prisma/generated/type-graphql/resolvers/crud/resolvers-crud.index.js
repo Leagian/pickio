@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserFollowsCrudResolver = exports.UserCrudResolver = exports.ShareCrudResolver = exports.PostCrudResolver = exports.LikeCrudResolver = exports.CommentCrudResolver = exports.BookmarkCrudResolver = void 0;
+var BookmarkCrudResolver_1 = require("./Bookmark/BookmarkCrudResolver");
+Object.defineProperty(exports, "BookmarkCrudResolver", { enumerable: true, get: function () { return BookmarkCrudResolver_1.BookmarkCrudResolver; } });
+var CommentCrudResolver_1 = require("./Comment/CommentCrudResolver");
+Object.defineProperty(exports, "CommentCrudResolver", { enumerable: true, get: function () { return CommentCrudResolver_1.CommentCrudResolver; } });
+var LikeCrudResolver_1 = require("./Like/LikeCrudResolver");
+Object.defineProperty(exports, "LikeCrudResolver", { enumerable: true, get: function () { return LikeCrudResolver_1.LikeCrudResolver; } });
+var PostCrudResolver_1 = require("./Post/PostCrudResolver");
+Object.defineProperty(exports, "PostCrudResolver", { enumerable: true, get: function () { return PostCrudResolver_1.PostCrudResolver; } });
+var ShareCrudResolver_1 = require("./Share/ShareCrudResolver");
+Object.defineProperty(exports, "ShareCrudResolver", { enumerable: true, get: function () { return ShareCrudResolver_1.ShareCrudResolver; } });
+var UserCrudResolver_1 = require("./User/UserCrudResolver");
+Object.defineProperty(exports, "UserCrudResolver", { enumerable: true, get: function () { return UserCrudResolver_1.UserCrudResolver; } });
+var UserFollowsCrudResolver_1 = require("./UserFollows/UserFollowsCrudResolver");
+Object.defineProperty(exports, "UserFollowsCrudResolver", { enumerable: true, get: function () { return UserFollowsCrudResolver_1.UserFollowsCrudResolver; } });

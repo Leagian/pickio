@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+tslib_1.__exportStar(require("./Bookmark/args"), exports);
+tslib_1.__exportStar(require("./Comment/args"), exports);
+tslib_1.__exportStar(require("./Like/args"), exports);
+tslib_1.__exportStar(require("./Post/args"), exports);
+tslib_1.__exportStar(require("./Share/args"), exports);
+tslib_1.__exportStar(require("./User/args"), exports);
+tslib_1.__exportStar(require("./UserFollows/args"), exports);
