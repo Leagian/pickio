@@ -12,7 +12,6 @@ import { join } from 'path';
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), 'src/graphql/schema.graphql'),
-      resolvers: [resolvers],
     }),
     UserModule,
   ],

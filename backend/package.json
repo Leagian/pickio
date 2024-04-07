@@ -30,11 +30,8 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/graphql": "^12.1.1",
     "@nestjs/platform-express": "^10.0.0",
-    "@types/graphql-fields": "^1.3.9",
     "dotenv": "^16.4.5",
     "graphql": "^16.8.1",
-    "graphql-fields": "^2.0.3",
-    "graphql-scalars": "^1.23.0",
     "graphql-type-json": "^0.3.2",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
@@ -65,8 +62,6 @@
     "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
-    "type-graphql": "^2.0.0-beta.6",
-    "typegraphql-prisma": "^0.27.2",
     "typescript": "^5.1.3"
   },
   "jest": {
