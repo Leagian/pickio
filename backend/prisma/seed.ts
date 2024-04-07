@@ -1,4 +1,3 @@
-// prisma/seed.ts
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -28,7 +27,7 @@ async function main() {
   });
 
   // Create a post for Alice
-  await prisma.post.create({
+  const alicePost = await prisma.post.create({
     data: {
       userId: alice.userId,
       content: 'First post!',
@@ -36,6 +35,23 @@ async function main() {
       location: { type: 'Point', coordinates: [2.3522, 48.8566] },
       images: ['https://example.com/path/to/image.jpg'],
       tags: ['Prisma', 'GraphQL'],
+    },
+  });
+
+  // Create a comment for Alice's post by Bob
+  await prisma.comment.create({
+    data: {
+      postId: alicePost.postId,
+      userId: bob.userId,
+      content: 'Super intéressant, Alice ! Merci pour le partage.',
+    },
+  });
+
+  // Create a like for Alice's post by Bob
+  await prisma.like.create({
+    data: {
+      postId: alicePost.postId,
+      userId: bob.userId,
     },
   });
 
