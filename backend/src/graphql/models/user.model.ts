@@ -1,4 +1,4 @@
-import { Field, ObjectType, ID } from '@nestjs/graphql';
+import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
 import {
   IsEmail,
   IsNotEmpty,
@@ -53,8 +53,8 @@ export class User {
   @IsDate()
   createdAt: Date;
 
-  @Field(() => [Post])
-  posts: Post[];
+  @Field(() => [Post], { nullable: true })
+  posts?: Post[];
 
   @Field(() => [Comment])
   comments: Comment[];
@@ -68,9 +68,74 @@ export class User {
   @Field(() => [Bookmark])
   bookmarks: Bookmark[];
 
-  @Field(() => [UserFollows])
-  followers: UserFollows[];
+  @Field(() => [UserFollows], { nullable: true })
+  followers?: UserFollows[];
 
-  @Field(() => [UserFollows])
-  followings: UserFollows[];
+  @Field(() => [UserFollows], { nullable: true })
+  followings?: UserFollows[];
+}
+
+@ObjectType()
+export class UserSearchResult {
+  @Field(() => ID)
+  userId: string;
+
+  @Field()
+  username: string;
+}
+
+@InputType()
+export class CreateUserInput {
+  @Field()
+  @IsNotEmpty({ message: 'The username is required' })
+  @Length(3, 20)
+  username: string;
+
+  @Field()
+  @IsEmail()
+  email: string;
+
+  @Field()
+  @IsNotEmpty()
+  @MinLength(8)
+  password: string;
+
+  @Field({ nullable: true })
+  profilePicture?: string;
+
+  @Field({ nullable: true })
+  bio?: string;
+
+  @Field({ nullable: true })
+  interests?: string;
+}
+
+@InputType()
+export class UpdateUserInput {
+  @Field({ nullable: true })
+  @IsOptional()
+  @Length(3, 20)
+  username?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsEmail()
+  email?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @MinLength(8)
+  password?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  profilePicture?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  bio?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  interests?: string;
 }

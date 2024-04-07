@@ -81,17 +81,46 @@ type User {
   bio: String
   interests: String
   createdAt: DateTime!
-  posts: [Post!]!
+  posts: [Post!]
   comments: [Comment!]!
   likes: [Like!]!
   shares: [Share!]!
   bookmarks: [Bookmark!]!
-  followers: [UserFollows!]!
-  followings: [UserFollows!]!
+  followers: [UserFollows!]
+  followings: [UserFollows!]
+}
+
+type UserSearchResult {
+  userId: ID!
+  username: String!
 }
 
 type Query {
   users: [User!]!
   user(userId: String!): User!
   followers(userId: String!): [User!]!
+  searchUsers(query: String!): [UserSearchResult!]!
+}
+
+type Mutation {
+  createUser(data: CreateUserInput!): User!
+  updateUser(userId: String!, data: UpdateUserInput!): User!
+}
+
+input CreateUserInput {
+  username: String!
+  email: String!
+  password: String!
+  profilePicture: String
+  bio: String
+  interests: String
+}
+
+input UpdateUserInput {
+  username: String
+  email: String
+  password: String
+  profilePicture: String
+  bio: String
+  interests: String
 }
