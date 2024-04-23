@@ -1,15 +1,35 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { UserService } from '../../user/user.service';
-import { User } from '../models/user.model';
 import {
-  CreateUserInput,
-  UpdateUserInput,
+  User,
+  UserCreateInput,
+  UserUpdateInput,
   UserSearchResult,
 } from '../models/user.model';
+import { UserFollows } from '../models/userFollow.model';
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(private userService: UserService) {}
+
+  //* CREATE *//
+
+  // Create a user
+  @Mutation(() => User)
+  createUser(@Args('data') data: UserCreateInput) {
+    return this.userService.createUser(data);
+  }
+
+  // Create a follow user
+  @Mutation(() => UserFollows)
+  async followUser(
+    @Args('followerId') followerId: string,
+    @Args('followingId') followingId: string,
+  ) {
+    return this.userService.followUser(followerId, followingId);
+  }
+
+  //* GET *//
 
   // Get users
   @Query(() => [User], { name: 'users' })
@@ -28,6 +48,11 @@ export class UserResolver {
   async getFollowers(@Args('userId') userId: string) {
     return this.userService.getFollowers(userId);
   }
+  // Get followings
+  @Query(() => [User], { name: 'followings' })
+  async getFollowings(@Args('userId') userId: string) {
+    return this.userService.getFollowings(userId);
+  }
 
   // Search users
   @Query(() => [UserSearchResult])
@@ -35,18 +60,39 @@ export class UserResolver {
     return this.userService.searchUsers(query);
   }
 
-  // Create a user
-  @Mutation(() => User)
-  createUser(@Args('data') data: CreateUserInput) {
-    return this.userService.createUser(data);
-  }
+  //* UPDATE *//
 
   // Update a user
   @Mutation(() => User)
   updateUser(
     @Args('userId') userId: string,
-    @Args('data') data: UpdateUserInput,
+    @Args('data') data: UserUpdateInput,
   ) {
     return this.userService.updateUser(userId, data);
   }
+
+  //* DELETE *//
+
+  // Delete a user
+  @Mutation(() => User)
+  async deleteUser(@Args('userId') userId: string) {
+    return this.userService.deleteUser(userId);
+  }
+
+  //* LOGIN LOGOUT *//
+
+  // Post login
+  // @Mutation(() => User)
+  // async login(
+  //   @Args('username') username: string,
+  //   @Args('password') password: string,
+  // ) {
+  //   return this.userService.login(username, password);
+  // }
+
+  // Post logout
+  // @Mutation(() => Boolean)
+  // async logout(@Args('userId') userId: string) {
+  //   return this.userService.logout(userId);
+  // }
 }

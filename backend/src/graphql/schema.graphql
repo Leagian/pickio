@@ -99,15 +99,32 @@ type Query {
   users: [User!]!
   user(userId: String!): User!
   followers(userId: String!): [User!]!
+  followings(userId: String!): [User!]!
   searchUsers(query: String!): [UserSearchResult!]!
+  posts: [Post!]!
+  post(postId: String!): Post!
+  comments(postId: String!): [Comment!]!
+  getLikesByPostId(postId: String!): [Like!]!
+  getBookmarks(userId: String!): [Bookmark!]!
 }
 
 type Mutation {
-  createUser(data: CreateUserInput!): User!
-  updateUser(userId: String!, data: UpdateUserInput!): User!
+  createUser(data: UserCreateInput!): User!
+  followUser(followerId: String!, followingId: String!): UserFollows!
+  updateUser(userId: String!, data: UserUpdateInput!): User!
+  deleteUser(userId: String!): User!
+  createPost(data: PostCreateInput!): Post!
+  updatePost(postId: String!, data: PostUpdateInput!): Post!
+  deletePost(postId: String!): Post!
+  createComment(postId: String!, userId: String!, data: CommentCreateInput!): Comment!
+  deleteComment(postId: String!, commentId: String!, userId: String!): Comment!
+  createLike(data: LikeCreateInput!): Like!
+  deleteLike(postId: String!, likeId: String!): Like!
+  createBookmark(data: BookmarkCreateInput!): Bookmark!
+  deleteBookmark(bookmarkId: String!): Bookmark!
 }
 
-input CreateUserInput {
+input UserCreateInput {
   username: String!
   email: String!
   password: String!
@@ -116,11 +133,45 @@ input CreateUserInput {
   interests: String
 }
 
-input UpdateUserInput {
+input UserUpdateInput {
   username: String
   email: String
   password: String
   profilePicture: String
   bio: String
   interests: String
+}
+
+input PostCreateInput {
+  userId: String!
+  content: String
+  address: String
+  location: JSONObject
+  images: [String!]!
+  tags: [String!]!
+}
+
+input PostUpdateInput {
+  userId: String
+  content: String
+  address: String
+  location: JSONObject
+  images: [String!]
+  tags: [String!]
+}
+
+input CommentCreateInput {
+  postId: String!
+  userId: String!
+  content: String!
+}
+
+input LikeCreateInput {
+  postId: String!
+  userId: String!
+}
+
+input BookmarkCreateInput {
+  postId: String!
+  userId: String!
 }

@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { User, UserFollows } from '@prisma/client';
-import { CreateUserInput, UpdateUserInput } from '../graphql/models/user.model';
+import { UserCreateInput, UserUpdateInput } from '../graphql/models/user.model';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  //* CREATE *//
+
   // Create a user
-  async createUser(data: CreateUserInput): Promise<User> {
+  async createUser(data: UserCreateInput): Promise<User> {
     return this.prisma.user.create({
       data,
     });
@@ -26,6 +28,8 @@ export class UserService {
       },
     });
   }
+
+  //* GET *//
 
   // Get users
   async getUsers(): Promise<User[]> {
@@ -49,6 +53,13 @@ export class UserService {
     });
   }
 
+  // Get followings
+  async getFollowings(userId: string) {
+    return await this.prisma.userFollows.findMany({
+      where: { followerId: userId },
+    });
+  }
+
   // Search users
   async searchUsers(query: string): Promise<User[]> {
     return this.prisma.user.findMany({
@@ -61,8 +72,10 @@ export class UserService {
     });
   }
 
+  //* UPDATE *//
+
   // Update user
-  async updateUser(userId: string, data: UpdateUserInput): Promise<User> {
+  async updateUser(userId: string, data: UserUpdateInput): Promise<User> {
     // TODO: Implement password hashing
     // const hashedPassword = await bcrypt.hash(data.password, 10);
     // data.password = hashedPassword;
@@ -81,6 +94,8 @@ export class UserService {
       },
     });
   }
+
+  //* DELETE *//
 
   // Delete user
   async deleteUser(userId: string): Promise<User> {
@@ -103,4 +118,6 @@ export class UserService {
       },
     });
   }
+
+  //* LOGIN LOGOUT *//
 }

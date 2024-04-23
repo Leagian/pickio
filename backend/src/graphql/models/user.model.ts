@@ -14,6 +14,8 @@ import { Share } from './share.model';
 import { Like } from './like.model';
 import { UserFollows } from './userFollow.model';
 
+//* USER INFO *//
+
 @ObjectType()
 export class User {
   @Field(() => ID)
@@ -75,6 +77,8 @@ export class User {
   followings?: UserFollows[];
 }
 
+//* USER SEARCH *//
+
 @ObjectType()
 export class UserSearchResult {
   @Field(() => ID)
@@ -84,8 +88,10 @@ export class UserSearchResult {
   username: string;
 }
 
+//* CREATE USER *//
+
 @InputType()
-export class CreateUserInput {
+export class UserCreateInput {
   @Field()
   @IsNotEmpty({ message: 'The username is required' })
   @Length(3, 20)
@@ -110,8 +116,10 @@ export class CreateUserInput {
   interests?: string;
 }
 
+//* UPDATE USER *//
+
 @InputType()
-export class UpdateUserInput {
+export class UserUpdateInput {
   @Field({ nullable: true })
   @IsOptional()
   @Length(3, 20)
