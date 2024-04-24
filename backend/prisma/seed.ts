@@ -1,71 +1,97 @@
 import { PrismaClient } from '@prisma/client';
+import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create users
-  const alice = await prisma.user.create({
-    data: {
-      username: 'Alice',
-      email: 'alice@example.com',
-      password: 'hashedpassword',
-      profilePicture: 'https://example.com/path/to/alice/profile/pic',
-      bio: 'Hello, I am Alice',
-      interests: 'Prisma, GraphQL',
-    },
-  });
+  // Créer 20 utilisateurs
+  for (let i = 0; i < 20; i++) {
+    await prisma.user.create({
+      data: {
+        username: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        profilePicture: faker.image.avatar(),
+        bio: faker.lorem.sentence(),
+        interests: faker.hacker.verb(),
+      },
+    });
+  }
 
-  const bob = await prisma.user.create({
-    data: {
-      username: 'Bob',
-      email: 'bob@example.com',
-      password: 'hashedpasswordbob',
-      profilePicture: 'https://example.com/path/to/bob/profile/pic',
-      bio: 'Hello, I am Bob',
-      interests: 'NestJS, TypeScript',
-    },
-  });
+  // Créer 30 posts partagés entre les utilisateurs
+  const users = await prisma.user.findMany();
+  for (let i = 0; i < 30; i++) {
+    const user = users[i % users.length]; // Sélectionner un utilisateur de manière cyclique
+    await prisma.post.create({
+      data: {
+        userId: user.userId,
+        content: faker.lorem.paragraph().substring(0, 300),
+        address: faker.location.city(),
+        location: {
+          type: 'Point',
+          coordinates: [faker.location.longitude(), faker.location.latitude()],
+        },
+        images: [faker.image.urlLoremFlickr({ category: 'food' })],
+        tags: [faker.hacker.noun(), faker.hacker.noun()],
+      },
+    });
+  }
 
-  // Create a post for Alice
-  const alicePost = await prisma.post.create({
-    data: {
-      userId: alice.userId,
-      content: 'First post!',
-      address: 'Paris, France',
-      location: { type: 'Point', coordinates: [2.3522, 48.8566] },
-      images: ['https://example.com/path/to/image.jpg'],
-      tags: ['Prisma', 'GraphQL'],
-    },
-  });
+  // Créer des relations de suivi entre les utilisateurs de manière aléatoire
+  for (let i = 0; i < users.length; i++) {
+    const follower = users[i];
+    const following = users[Math.floor(Math.random() * users.length)]; // Suivre un utilisateur aléatoire
 
-  // Create a comment for Alice's post by Bob
-  await prisma.comment.create({
-    data: {
-      postId: alicePost.postId,
-      userId: bob.userId,
-      content: 'Super intéressant, Alice ! Merci pour le partage.',
-    },
-  });
+    if (follower.userId !== following.userId) {
+      await prisma.userFollows.create({
+        data: {
+          followerId: follower.userId,
+          followingId: following.userId,
+        },
+      });
+    }
+  }
 
-  // Create a like for Alice's post by Bob
-  await prisma.like.create({
-    data: {
-      postId: alicePost.postId,
-      userId: bob.userId,
-    },
-  });
+  // Créer un nombre variable de commentaires, likes et bookmarks pour chaque utilisateur
+  const posts = await prisma.post.findMany();
+  for (const user of users) {
+    const userPosts = posts.filter((post) => post.userId === user.userId);
+    for (let i = 0; i < userPosts.length; i++) {
+      // Créer un nombre aléatoire de commentaires pour chaque post de l'utilisateur
+      const numComments = Math.floor(Math.random() * 10); // Générer un nombre aléatoire entre 0 et 10
+      for (let j = 0; j < numComments; j++) {
+        await prisma.comment.create({
+          data: {
+            postId: userPosts[i].postId,
+            userId: user.userId,
+            content: faker.lorem.sentence(),
+          },
+        });
+      }
 
-  // Create a post for Bob
-  await prisma.post.create({
-    data: {
-      userId: bob.userId,
-      content: 'Hello, World!',
-      address: 'Berlin, Germany',
-      location: { type: 'Point', coordinates: [13.405, 52.52] },
-      images: ['https://example.com/path/to/image.jpg'],
-      tags: ['NestJS', 'TypeScript'],
-    },
-  });
+      // Créer un nombre aléatoire de likes pour chaque post de l'utilisateur
+      const numLikes = Math.floor(Math.random() * 10); // Générer un nombre aléatoire entre 0 et 10
+      for (let j = 0; j < numLikes; j++) {
+        await prisma.like.create({
+          data: {
+            postId: userPosts[i].postId,
+            userId: user.userId,
+          },
+        });
+      }
+
+      // Créer un nombre aléatoire de bookmarks pour chaque post de l'utilisateur
+      const numBookmarks = Math.floor(Math.random() * 10); // Générer un nombre aléatoire entre 0 et 10
+      for (let j = 0; j < numBookmarks; j++) {
+        await prisma.bookmark.create({
+          data: {
+            postId: userPosts[i].postId,
+            userId: user.userId,
+          },
+        });
+      }
+    }
+  }
 }
 
 main()
