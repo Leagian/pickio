@@ -47,17 +47,21 @@ export class UserService {
   }
 
   // Get followers
-  async getFollowers(userId: string) {
-    return await this.prisma.userFollows.findMany({
+  async getFollowers(userId: string): Promise<User[]> {
+    const userFollows = await this.prisma.userFollows.findMany({
       where: { followingId: userId },
+      include: { follower: true },
     });
+    return userFollows.map((follow) => follow.follower);
   }
 
   // Get followings
-  async getFollowings(userId: string) {
-    return await this.prisma.userFollows.findMany({
+  async getFollowings(userId: string): Promise<User[]> {
+    const userFollows = await this.prisma.userFollows.findMany({
       where: { followerId: userId },
+      include: { following: true },
     });
+    return userFollows.map((follow) => follow.following);
   }
 
   // Search users

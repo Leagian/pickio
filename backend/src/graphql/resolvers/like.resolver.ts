@@ -1,6 +1,6 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { LikeService } from '../../like/like.service';
-import { Like, LikeCreateInput } from '../models/like.model';
+import { Like, LikeCreateInput, LikesAndCount } from '../models/like.model';
 
 @Resolver(() => Like)
 export class LikeResolver {
@@ -16,10 +16,10 @@ export class LikeResolver {
 
   //* GET *//
 
-  // Get likes by post ID
-  @Query(() => [Like])
-  getLikesByPostId(@Args('postId') postId: string) {
-    return this.likeService.getLikesByPostId(postId);
+  // Get likes and their count by post ID
+  @Query(() => LikesAndCount)
+  getLikesAndCountByPostId(@Args('postId') postId: string) {
+    return this.likeService.getLikesAndCountByPostId(postId);
   }
 
   //* DELETE *//

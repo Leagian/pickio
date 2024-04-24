@@ -35,3 +35,14 @@ export class LikeCreateInput {
   @Field()
   userId: string;
 }
+
+//* LIKES AND COUNT *//
+
+@ObjectType()
+export class LikesAndCount {
+  @Field(() => [Like])
+  likes: Like[];
+
+  @Field(() => Number)
+  count: number;
+}

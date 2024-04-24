@@ -43,14 +43,21 @@ export class UserResolver {
     return this.userService.getUserById(userId);
   }
 
+  // Get user by username
+  @Query(() => User, { nullable: true })
+  async user(@Args('username') username: string) {
+    return this.userService.getUserByUsername(username);
+  }
+
   // Get followers
-  @Query(() => [User], { name: 'followers' })
-  async getFollowers(@Args('userId') userId: string) {
+  @Query(() => [User])
+  async followers(@Args('userId') userId: string) {
     return this.userService.getFollowers(userId);
   }
+
   // Get followings
-  @Query(() => [User], { name: 'followings' })
-  async getFollowings(@Args('userId') userId: string) {
+  @Query(() => [User])
+  async followings(@Args('userId') userId: string) {
     return this.userService.getFollowings(userId);
   }
 

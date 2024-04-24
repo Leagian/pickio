@@ -16,13 +16,23 @@ export class LikeService {
 
   //* GET *//
 
-  // Get likes by post ID
-  async getLikesByPostId(postId: string): Promise<Like[]> {
-    return this.prisma.like.findMany({
+  // Get likes and their count by post ID
+  async getLikesAndCountByPostId(
+    postId: string,
+  ): Promise<{ likes: Like[]; count: number }> {
+    const likes = await this.prisma.like.findMany({
       where: {
         postId,
       },
     });
+
+    const count = await this.prisma.like.count({
+      where: {
+        postId,
+      },
+    });
+
+    return { likes, count };
   }
 
   //* DELETE *//

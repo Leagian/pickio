@@ -23,6 +23,11 @@ type Like {
   post: Post!
 }
 
+type LikesAndCount {
+  likes: [Like!]!
+  count: Float!
+}
+
 type Share {
   shareId: ID!
   postId: String!
@@ -97,14 +102,14 @@ type UserSearchResult {
 
 type Query {
   users: [User!]!
-  user(userId: String!): User!
+  user(username: String!): User
   followers(userId: String!): [User!]!
   followings(userId: String!): [User!]!
   searchUsers(query: String!): [UserSearchResult!]!
   posts: [Post!]!
   post(postId: String!): Post!
   comments(postId: String!): [Comment!]!
-  getLikesByPostId(postId: String!): [Like!]!
+  getLikesAndCountByPostId(postId: String!): LikesAndCount!
   getBookmarks(userId: String!): [Bookmark!]!
 }
 
