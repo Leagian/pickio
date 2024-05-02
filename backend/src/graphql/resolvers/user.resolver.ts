@@ -1,12 +1,10 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { UserService } from '../../user/user.service';
-import {
-  User,
-  UserCreateInput,
-  UserUpdateInput,
-  UserSearchResult,
-} from '../models/user.model';
+import { User, UserSearchResult } from '../models/user.model';
 import { UserFollows } from '../models/userFollow.model';
+import { UserCreateInput, UserUpdateInput } from '../../user/dto/user.dto';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -21,7 +19,7 @@ export class UserResolver {
   }
 
   // Create a follow user
-  @Mutation(() => UserFollows)
+  @Mutation(() => UserFollows, { name: 'followUser' })
   async followUser(
     @Args('followerId') followerId: string,
     @Args('followingId') followingId: string,
@@ -33,36 +31,53 @@ export class UserResolver {
 
   // Get users
   @Query(() => [User], { name: 'users' })
+  @UseGuards(JwtAuthGuard)
   getUsers() {
     return this.userService.getUsers();
   }
 
   // Get user by ID
-  @Query(() => User, { name: 'user' })
+  @Query(() => User, { name: 'userById' })
   async getUserById(@Args('userId') userId: string) {
     return this.userService.getUserById(userId);
   }
 
   // Get user by username
-  @Query(() => User, { nullable: true })
+  @Query(() => User, { name: 'userByUsername' })
   async user(@Args('username') username: string) {
     return this.userService.getUserByUsername(username);
   }
 
   // Get followers
-  @Query(() => [User])
+  @Query(() => [User], { name: 'followers' })
   async followers(@Args('userId') userId: string) {
     return this.userService.getFollowers(userId);
   }
 
   // Get followings
-  @Query(() => [User])
+  @Query(() => [User], { name: 'followings' })
   async followings(@Args('userId') userId: string) {
     return this.userService.getFollowings(userId);
   }
 
+  // Get followers count
+  @Query(() => Number)
+  async getFollowersCount(
+    @Args('userId', { type: () => String }) userId: string,
+  ) {
+    return this.userService.getFollowersCount(userId);
+  }
+
+  // Get followings count
+  @Query(() => Number)
+  async getFollowingsCount(
+    @Args('userId', { type: () => String }) userId: string,
+  ) {
+    return this.userService.getFollowingsCount(userId);
+  }
+
   // Search users
-  @Query(() => [UserSearchResult])
+  @Query(() => [UserSearchResult], { name: 'searchUsers' })
   async searchUsers(@Args('query') query: string): Promise<UserSearchResult[]> {
     return this.userService.searchUsers(query);
   }
@@ -70,7 +85,7 @@ export class UserResolver {
   //* UPDATE *//
 
   // Update a user
-  @Mutation(() => User)
+  @Mutation(() => User, { name: 'updateUser' })
   updateUser(
     @Args('userId') userId: string,
     @Args('data') data: UserUpdateInput,
@@ -81,25 +96,8 @@ export class UserResolver {
   //* DELETE *//
 
   // Delete a user
-  @Mutation(() => User)
+  @Mutation(() => User, { name: 'deleteUser' })
   async deleteUser(@Args('userId') userId: string) {
     return this.userService.deleteUser(userId);
   }
-
-  //* LOGIN LOGOUT *//
-
-  // Post login
-  // @Mutation(() => User)
-  // async login(
-  //   @Args('username') username: string,
-  //   @Args('password') password: string,
-  // ) {
-  //   return this.userService.login(username, password);
-  // }
-
-  // Post logout
-  // @Mutation(() => Boolean)
-  // async logout(@Args('userId') userId: string) {
-  //   return this.userService.logout(userId);
-  // }
 }

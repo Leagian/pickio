@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma.service';
 import { User, UserFollows } from '@prisma/client';
-import { UserCreateInput, UserUpdateInput } from '../graphql/models/user.model';
+import { UserCreateInput, UserUpdateInput } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -64,6 +65,20 @@ export class UserService {
     return userFollows.map((follow) => follow.following);
   }
 
+  // Get followers count
+  async getFollowersCount(userId: string): Promise<number> {
+    return this.prisma.userFollows.count({
+      where: { followingId: userId },
+    });
+  }
+
+  // Get followings count
+  async getFollowingsCount(userId: string): Promise<number> {
+    return this.prisma.userFollows.count({
+      where: { followerId: userId },
+    });
+  }
+
   // Search users
   async searchUsers(query: string): Promise<User[]> {
     return this.prisma.user.findMany({
@@ -79,10 +94,17 @@ export class UserService {
   //* UPDATE *//
 
   // Update user
-  async updateUser(userId: string, data: UserUpdateInput): Promise<User> {
-    // TODO: Implement password hashing
-    // const hashedPassword = await bcrypt.hash(data.password, 10);
-    // data.password = hashedPassword;
+  async updateUser(
+    userId: string,
+    userUpdateInput: UserUpdateInput,
+  ): Promise<User> {
+    let data = { ...userUpdateInput };
+
+    if (userUpdateInput.password) {
+      const hashedPassword = await bcrypt.hash(userUpdateInput.password, 10);
+      data = { ...data, password: hashedPassword };
+    }
+
     return this.prisma.user.update({
       where: { userId },
       data,
@@ -122,6 +144,4 @@ export class UserService {
       },
     });
   }
-
-  //* LOGIN LOGOUT *//
 }

@@ -21,7 +21,7 @@ RUN chown -R node:node /app
 USER node
 
 # Exposer le port que l'application utilise
-EXPOSE 3000
+EXPOSE 5000
 
 # Définir la commande pour démarrer l'application
 CMD ["npm", "run", "start:dev"]

@@ -1,6 +1,7 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { BookmarkService } from '../../bookmark/bookmark.service';
-import { Bookmark, BookmarkCreateInput } from '../models/bookmark.model';
+import { Bookmark } from '../models/bookmark.model';
+import { BookmarkCreateInput } from '../../bookmark/dto/bookmark.dto';
 
 @Resolver(() => Bookmark)
 export class BookmarkResolver {
@@ -17,7 +18,7 @@ export class BookmarkResolver {
   //* GET *//
 
   // Get bookmarks
-  @Query(() => [Bookmark])
+  @Query(() => [Bookmark], { name: 'bookmarks' })
   async getBookmarks(@Args('userId') userId: string) {
     return this.bookmarkService.getBookmarks(userId);
   }
@@ -25,7 +26,7 @@ export class BookmarkResolver {
   //* DELETE *//
 
   // Delete bookmark
-  @Mutation(() => Bookmark)
+  @Mutation(() => Bookmark, { name: 'deleteBookmark' })
   async deleteBookmark(@Args('bookmarkId') bookmarkId: string) {
     return this.bookmarkService.deleteBookmark(bookmarkId);
   }

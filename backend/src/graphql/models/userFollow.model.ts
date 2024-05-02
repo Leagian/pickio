@@ -2,6 +2,8 @@ import { Field, ObjectType, ID } from '@nestjs/graphql';
 import { IsDate } from 'class-validator';
 import { User } from './user.model';
 
+//* USER FOLLOWS INFO *//
+
 @ObjectType()
 export class UserFollows {
   @Field(() => ID)

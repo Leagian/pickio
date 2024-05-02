@@ -1,6 +1,7 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { ShareService } from '../../share/share.service';
-import { Share, ShareCreateInput } from '../models/share.model';
+import { Share } from '../models/share.model';
+import { ShareCreateInput } from '../../share/dto/share.dto';
 
 @Resolver(() => Share)
 export class ShareResolver {
@@ -15,7 +16,7 @@ export class ShareResolver {
   }
 
   // Share post with followings
-  @Mutation(() => [Share])
+  @Mutation(() => [Share], { name: 'sharePostWithFollowings' })
   async sharePostWithFollowings(
     @Args('userId') userId: string,
     @Args('postId') postId: string,
@@ -40,7 +41,7 @@ export class ShareResolver {
   //* DELETE *//
 
   // Delete share
-  @Mutation(() => Share)
+  @Mutation(() => Share, { name: 'deleteShare' })
   async deleteShare(@Args('shareId') shareId: string) {
     return this.shareService.deleteShare(shareId);
   }

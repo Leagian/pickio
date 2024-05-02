@@ -1,5 +1,5 @@
-import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
-import { IsString } from 'class-validator';
+import { Field, ObjectType, ID } from '@nestjs/graphql';
+
 import { Post } from './post.model';
 import { User } from './user.model';
 
@@ -27,21 +27,4 @@ export class Comment {
 
   @Field(() => Post)
   post: Post;
-}
-
-//* CREATE COMMENT *//
-
-@InputType()
-export class CommentCreateInput {
-  @Field()
-  @IsString()
-  postId: string;
-
-  @Field()
-  @IsString()
-  userId: string;
-
-  @Field()
-  @IsString()
-  content: string;
 }

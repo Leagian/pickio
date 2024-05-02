@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Share } from '@prisma/client';
-import { ShareCreateInput } from '../graphql/models/share.model';
+import { ShareCreateInput } from './dto/share.dto';
 
 @Injectable()
 export class ShareService {

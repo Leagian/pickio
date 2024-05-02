@@ -1,6 +1,7 @@
 import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
 import { CommentService } from '../../comment/comment.service';
-import { Comment, CommentCreateInput } from '../models/comment.model';
+import { Comment } from '../models/comment.model';
+import { CommentCreateInput } from '../../comment/dto/comment.dto';
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -29,7 +30,7 @@ export class CommentResolver {
   //* DELETE *//
 
   // Delete comment
-  @Mutation(() => Comment)
+  @Mutation(() => Comment, { name: 'deleteComment' })
   deleteComment(
     @Args('postId') postId: string,
     @Args('commentId') commentId: string,

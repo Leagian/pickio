@@ -1,5 +1,5 @@
-import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
-import { IsDate, IsString, IsOptional, IsArray } from 'class-validator';
+import { Field, ObjectType, ID } from '@nestjs/graphql';
+import { IsDate } from 'class-validator';
 import { GraphQLJSONObject } from 'graphql-type-json';
 import { Location } from './location.interface';
 import { User } from './user.model';
@@ -51,69 +51,4 @@ export class Post {
 
   @Field(() => [Bookmark], { nullable: true })
   bookmarks?: Bookmark[];
-}
-
-//* CREATE POST *//
-
-@InputType()
-export class PostCreateInput {
-  @Field()
-  @IsString()
-  userId: string;
-
-  @Field({ nullable: true })
-  @IsString()
-  @IsOptional()
-  content?: string;
-
-  @Field({ nullable: true })
-  @IsString()
-  @IsOptional()
-  address?: string;
-
-  @Field(() => GraphQLJSONObject, { nullable: true })
-  @IsOptional()
-  location?: any;
-
-  @Field(() => [String])
-  @IsArray()
-  images: string[];
-
-  @Field(() => [String])
-  @IsArray()
-  tags: string[];
-}
-
-//* UPDATE POST *//
-
-@InputType()
-export class PostUpdateInput {
-  @Field({ nullable: true })
-  @IsString()
-  @IsOptional()
-  userId?: string;
-
-  @Field({ nullable: true })
-  @IsString()
-  @IsOptional()
-  content?: string;
-
-  @Field({ nullable: true })
-  @IsString()
-  @IsOptional()
-  address?: string;
-
-  @Field(() => GraphQLJSONObject, { nullable: true })
-  @IsOptional()
-  location?: any;
-
-  @Field(() => [String], { nullable: true })
-  @IsArray()
-  @IsOptional()
-  images?: string[];
-
-  @Field(() => [String], { nullable: true })
-  @IsArray()
-  @IsOptional()
-  tags?: string[];
 }

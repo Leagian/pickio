@@ -1,6 +1,7 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { PostService } from '../../post/post.service';
-import { Post, PostCreateInput, PostUpdateInput } from '../models/post.model';
+import { Post } from '../models/post.model';
+import { PostCreateInput, PostUpdateInput } from '../../post/dto/post.dto';
 
 @Resolver(() => Post)
 export class PostResolver {
@@ -30,7 +31,7 @@ export class PostResolver {
 
   //* UPDATE *//
 
-  @Mutation(() => Post)
+  @Mutation(() => Post, { name: 'updatePost' })
   async updatePost(
     @Args('postId') postId: string,
     @Args('data') data: PostUpdateInput,
@@ -40,7 +41,7 @@ export class PostResolver {
 
   //* DELETE *//
 
-  @Mutation(() => Post)
+  @Mutation(() => Post, { name: 'deletePost' })
   async deletePost(@Args('postId') postId: string) {
     return this.postService.deletePost(postId);
   }

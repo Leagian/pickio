@@ -100,20 +100,31 @@ type UserSearchResult {
   username: String!
 }
 
+type LoginResponse {
+  accessToken: String!
+  user: User!
+}
+
 type Query {
   users: [User!]!
-  user(username: String!): User
+  userById(userId: String!): User!
+  userByUsername(username: String!): User!
   followers(userId: String!): [User!]!
   followings(userId: String!): [User!]!
+  getFollowersCount(userId: String!): Float!
+  getFollowingsCount(userId: String!): Float!
   searchUsers(query: String!): [UserSearchResult!]!
   posts: [Post!]!
   post(postId: String!): Post!
+  bookmarks(userId: String!): [Bookmark!]!
   comments(postId: String!): [Comment!]!
   getLikesAndCountByPostId(postId: String!): LikesAndCount!
-  getBookmarks(userId: String!): [Bookmark!]!
+  getSharedPosts(userId: String!): [Share!]!
 }
 
 type Mutation {
+  login(loginUserInput: LoginUserInput!): LoginResponse!
+  signup(userCreateInput: UserCreateInput!): User!
   createUser(data: UserCreateInput!): User!
   followUser(followerId: String!, followingId: String!): UserFollows!
   updateUser(userId: String!, data: UserUpdateInput!): User!
@@ -121,12 +132,20 @@ type Mutation {
   createPost(data: PostCreateInput!): Post!
   updatePost(postId: String!, data: PostUpdateInput!): Post!
   deletePost(postId: String!): Post!
+  createBookmark(data: BookmarkCreateInput!): Bookmark!
+  deleteBookmark(bookmarkId: String!): Bookmark!
   createComment(postId: String!, userId: String!, data: CommentCreateInput!): Comment!
   deleteComment(postId: String!, commentId: String!, userId: String!): Comment!
   createLike(data: LikeCreateInput!): Like!
   deleteLike(postId: String!, likeId: String!): Like!
-  createBookmark(data: BookmarkCreateInput!): Bookmark!
-  deleteBookmark(bookmarkId: String!): Bookmark!
+  createShare(data: ShareCreateInput!): Share!
+  sharePostWithFollowings(userId: String!, postId: String!, followingIds: [String!]!): [Share!]!
+  deleteShare(shareId: String!): Share!
+}
+
+input LoginUserInput {
+  username: String!
+  password: String!
 }
 
 input UserCreateInput {
@@ -157,12 +176,17 @@ input PostCreateInput {
 }
 
 input PostUpdateInput {
-  userId: String
+  userId: String!
   content: String
   address: String
   location: JSONObject
   images: [String!]
   tags: [String!]
+}
+
+input BookmarkCreateInput {
+  postId: String!
+  userId: String!
 }
 
 input CommentCreateInput {
@@ -176,7 +200,7 @@ input LikeCreateInput {
   userId: String!
 }
 
-input BookmarkCreateInput {
+input ShareCreateInput {
   postId: String!
   userId: String!
 }

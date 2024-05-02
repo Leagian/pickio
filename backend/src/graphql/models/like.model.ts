@@ -1,4 +1,4 @@
-import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
+import { Field, ObjectType, ID } from '@nestjs/graphql';
 import { Post } from './post.model';
 import { User } from './user.model';
 
@@ -23,17 +23,6 @@ export class Like {
 
   @Field(() => Post)
   post: Post;
-}
-
-//* CREATE LIKE *//
-
-@InputType()
-export class LikeCreateInput {
-  @Field()
-  postId: string;
-
-  @Field()
-  userId: string;
 }
 
 //* LIKES AND COUNT *//

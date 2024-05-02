@@ -1,4 +1,4 @@
-import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
+import { Field, ObjectType, ID } from '@nestjs/graphql';
 import { IsDate } from 'class-validator';
 import { User } from './user.model';
 import { Post } from './post.model';
@@ -25,15 +25,4 @@ export class Share {
 
   @Field(() => Post)
   post: Post;
-}
-
-//* SHARE CREATE INPUT *//
-
-@InputType()
-export class ShareCreateInput {
-  @Field()
-  postId: string;
-
-  @Field()
-  userId: string;
 }

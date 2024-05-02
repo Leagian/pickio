@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Bookmark } from '@prisma/client';
-import { BookmarkCreateInput } from '../graphql/models/bookmark.model';
+import { BookmarkCreateInput } from './dto/bookmark.dto';
 
 @Injectable()
 export class BookmarkService {

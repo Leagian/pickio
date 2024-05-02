@@ -7,7 +7,9 @@ import { PostModule } from './post/post.module';
 import { CommentModule } from './comment/comment.module';
 import { LikeModule } from './like/like.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
+import { ShareModule } from './share/share.module';
 import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,11 +19,13 @@ import { join } from 'path';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), 'src/graphql/schema.graphql'),
     }),
+    AuthModule,
     UserModule,
     PostModule,
+    BookmarkModule,
     CommentModule,
     LikeModule,
-    BookmarkModule,
+    ShareModule,
   ],
 })
 export class AppModule {}
