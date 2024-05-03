@@ -1,0 +1,11 @@
+const GET_ALL_POSTS = gql`
+  query GetAllPosts {
+    posts {
+      postId
+      content
+      address
+      location
+      images
+    }
+  }
+`;
