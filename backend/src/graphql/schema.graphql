@@ -80,8 +80,6 @@ type UserFollows {
 type User {
   userId: ID!
   username: String!
-  email: String!
-  password: String!
   profilePicture: String
   bio: String
   interests: String

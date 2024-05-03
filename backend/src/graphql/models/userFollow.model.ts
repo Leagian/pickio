@@ -1,5 +1,5 @@
 import { Field, ObjectType, ID } from '@nestjs/graphql';
-import { IsDate } from 'class-validator';
+import { IsUUID, IsNotEmpty, IsDate } from 'class-validator';
 import { User } from './user.model';
 
 //* USER FOLLOWS INFO *//
@@ -7,12 +7,18 @@ import { User } from './user.model';
 @ObjectType()
 export class UserFollows {
   @Field(() => ID)
+  @IsNotEmpty()
+  @IsUUID()
   userFollowsId: string;
 
   @Field()
+  @IsNotEmpty()
+  @IsUUID()
   followerId: string;
 
   @Field()
+  @IsNotEmpty()
+  @IsUUID()
   followingId: string;
 
   @Field(() => User)

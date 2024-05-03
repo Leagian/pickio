@@ -50,6 +50,15 @@ export class AuthService {
       throw new Error('User already exists');
     }
 
+    const passwordRegex =
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+
+    if (!passwordRegex.test(userCreateInput.password)) {
+      throw new Error(
+        'The password must contain at least 8 characters, including at least 1 symbol and 1 number.',
+      );
+    }
+
     const password = await bcrypt.hash(userCreateInput.password, 10);
 
     return this.userService.createUser({

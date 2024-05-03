@@ -1,4 +1,5 @@
 import { Field, ObjectType, ID } from '@nestjs/graphql';
+import { IsUUID, IsNotEmpty, IsDate } from 'class-validator';
 import { Post } from './post.model';
 import { User } from './user.model';
 
@@ -7,6 +8,8 @@ import { User } from './user.model';
 @ObjectType()
 export class Like {
   @Field(() => ID)
+  @IsNotEmpty()
+  @IsUUID()
   likeId: string;
 
   @Field()
@@ -16,6 +19,7 @@ export class Like {
   userId: string;
 
   @Field()
+  @IsDate()
   createdAt: Date;
 
   @Field(() => User)

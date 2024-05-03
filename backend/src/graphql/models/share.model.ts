@@ -1,5 +1,5 @@
 import { Field, ObjectType, ID } from '@nestjs/graphql';
-import { IsDate } from 'class-validator';
+import { IsUUID, IsNotEmpty, IsDate } from 'class-validator';
 import { User } from './user.model';
 import { Post } from './post.model';
 
@@ -8,6 +8,8 @@ import { Post } from './post.model';
 @ObjectType()
 export class Share {
   @Field(() => ID)
+  @IsNotEmpty()
+  @IsUUID()
   shareId: string;
 
   @Field()

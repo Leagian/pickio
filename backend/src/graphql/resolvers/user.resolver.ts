@@ -38,6 +38,7 @@ export class UserResolver {
 
   // Get user by ID
   @Query(() => User, { name: 'userById' })
+  @UseGuards(JwtAuthGuard)
   async getUserById(@Args('userId') userId: string) {
     return this.userService.getUserById(userId);
   }

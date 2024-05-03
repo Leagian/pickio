@@ -2,6 +2,8 @@ import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { PostService } from '../../post/post.service';
 import { Post } from '../models/post.model';
 import { PostCreateInput, PostUpdateInput } from '../../post/dto/post.dto';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 
 @Resolver(() => Post)
 export class PostResolver {
@@ -19,12 +21,14 @@ export class PostResolver {
 
   // Get posts
   @Query(() => [Post], { name: 'posts' })
+  @UseGuards(JwtAuthGuard)
   getPosts() {
     return this.postService.getPosts();
   }
 
   // Get post by ID
   @Query(() => Post, { name: 'post' })
+  @UseGuards(JwtAuthGuard)
   async getPostById(@Args('postId') postId: string) {
     return this.postService.getPostById(postId);
   }
