@@ -21,8 +21,6 @@ export class UserCreateInput {
   email: string;
 
   @Field()
-  @IsNotEmpty()
-  @MinLength(8)
   password: string;
 
   @Field({ nullable: true })

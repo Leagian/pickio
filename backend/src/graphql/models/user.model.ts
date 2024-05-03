@@ -21,6 +21,9 @@ export class User {
   })
   username: string;
 
+  @Field()
+  email: string;
+
   @Field({ nullable: true })
   @IsOptional()
   profilePicture?: string;
