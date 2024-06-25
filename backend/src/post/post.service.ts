@@ -21,9 +21,51 @@ export class PostService {
     return this.prisma.post.findMany();
   }
 
+  // Get posts by user ID
+  async getPostsByUserId(userId: string): Promise<Post[]> {
+    return this.prisma.post.findMany({ where: { userId } });
+  }
+
   // Get post by ID
   async getPostById(postId: string): Promise<Post | null> {
     return this.prisma.post.findUnique({ where: { postId } });
+  }
+
+  // Get posts by following ID
+  async getPostsByFollowingId(userId: string): Promise<Post[]> {
+    const followings = await this.prisma.userFollows.findMany({
+      where: { followerId: userId },
+    });
+
+    const followingIds = followings.map((following) => following.followingId);
+
+    return this.prisma.post.findMany({
+      where: {
+        userId: {
+          in: followingIds,
+        },
+      },
+      include: {
+        User: {
+          select: {
+            profilePicture: true,
+            username: true,
+          },
+        },
+        comments: {
+          select: {
+            commentId: true,
+            content: true,
+            User: {
+              select: {
+                username: true,
+                profilePicture: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   //* UPDATE *//

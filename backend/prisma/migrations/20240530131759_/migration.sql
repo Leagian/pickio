@@ -41,7 +41,7 @@ CREATE TABLE "Comment" (
     "commentId" TEXT NOT NULL,
     "postId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "content" TEXT NOT NULL,
+    "content" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Comment_pkey" PRIMARY KEY ("commentId")

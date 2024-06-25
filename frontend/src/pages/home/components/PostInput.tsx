@@ -1,32 +1,25 @@
 import { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
-import { Post } from '@/types/post';
+import { useCreatePostMutation } from '../../../generated/graphql-types.ts';
+import { GET_ALL_POSTS } from '../../../graphql/queries.ts';
 
 export const PostInput = () => {
   const [content, setContent] = useState<string>('');
-  const [images, setImages] = useState<string[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
-  const [createPost, { loading, error }] = useMutation<Post>(
-    CREATE_POST_MUTATION,
-    {
-      refetchQueries: [{ query: GET_ALL_POSTS }],
-    }
-  );
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [createPost, { loading, error }] = useCreatePostMutation({
+    refetchQueries: [{ query: GET_ALL_POSTS }],
+  });
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    const formData = new FormData();
+    selectedImages.forEach((file, index) => {
+      formData.append(`images[${index}]`, file);
+    });
+
     try {
-      const { data } = await createPost({
-        variables: {
-          data: {
-            content,
-            images: selectedImages,
-            location: null,
-          },
-        },
-      });
+      await createPost();
       setSelectedImages([]);
       setIsModalOpen(false);
     } catch (error) {
@@ -42,8 +35,12 @@ export const PostInput = () => {
   if (error) return <p>Error : {error.message}</p>;
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form
+      className='flex flex-col items-center w-full md:w-1/2 mx-auto'
+      onSubmit={handleFormSubmit}
+    >
       <input
+        className='text-white bg-gray-800 p-4 mt-5 w-2/3 h-20 rounded-2xl'
         type='text'
         placeholder='What do you recommend...'
         value={content}
@@ -57,11 +54,13 @@ export const PostInput = () => {
             multiple
             accept='image/*'
             onChange={(e) => {
-              if (e.target.files.length > 3) {
-                alert('You can only select up to 3 images.');
-                return;
+              if (e.target.files) {
+                if (e.target.files.length > 5) {
+                  alert('You can only select up to 5 images.');
+                  return;
+                }
+                setSelectedImages(Array.from(e.target.files));
               }
-              setSelectedImages(Array.from(e.target.files));
             }}
           />
           <button type='submit'>Post</button>

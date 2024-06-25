@@ -114,6 +114,8 @@ type Query {
   getFollowingsCount(userId: String!): Float!
   searchUsers(query: String!): [UserSearchResult!]!
   posts: [Post!]!
+  postsByUserId(userId: String!): [Post!]!
+  postsByFollowingId(userId: String!): [Post!]!
   post(postId: String!): Post!
   bookmarks(userId: String!): [Bookmark!]!
   comments(postId: String!): [Comment!]!

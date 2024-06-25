@@ -26,6 +26,20 @@ export class PostResolver {
     return this.postService.getPosts();
   }
 
+  // Get posts by user ID
+  @Query(() => [Post], { name: 'postsByUserId' })
+  @UseGuards(JwtAuthGuard)
+  getPostsByUserId(@Args('userId') userId: string) {
+    return this.postService.getPostsByUserId(userId);
+  }
+
+  // Get posts by following ID
+  @Query(() => [Post], { name: 'postsByFollowingId' })
+  // @UseGuards(JwtAuthGuard)
+  getPostsByFollowingId(@Args('userId') userId: string) {
+    return this.postService.getPostsByFollowingId(userId);
+  }
+
   // Get post by ID
   @Query(() => Post, { name: 'post' })
   @UseGuards(JwtAuthGuard)

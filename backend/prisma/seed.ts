@@ -42,7 +42,16 @@ async function main() {
     const follower = users[i];
     const following = users[Math.floor(Math.random() * users.length)]; // Suivre un utilisateur aléatoire
 
-    if (follower.userId !== following.userId) {
+    const existingFollow = await prisma.userFollows.findUnique({
+      where: {
+        followerId_followingId: {
+          followerId: follower.userId,
+          followingId: following.userId,
+        },
+      },
+    });
+
+    if (!existingFollow) {
       await prisma.userFollows.create({
         data: {
           followerId: follower.userId,
