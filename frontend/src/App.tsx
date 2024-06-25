@@ -5,8 +5,9 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Header } from './pages/home/components/Header';
+import { ThemeProvider } from './components/ui/theme-provider';
 import { Home } from './pages/home/Home';
 import { LoginPage } from './pages/login/LoginPage';
 
@@ -37,15 +38,19 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const location = useLocation();
+
   return (
     <ApolloProvider client={client}>
-      <div className='dark'>
-        <Header />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/authentication' element={<LoginPage />} />
-        </Routes>
-      </div>
+      <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
+        <div>
+          {location.pathname !== '/authentication' && <Header />}
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/authentication' element={<LoginPage />} />
+          </Routes>
+        </div>
+      </ThemeProvider>
     </ApolloProvider>
   );
 }
